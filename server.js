@@ -15,6 +15,7 @@ const app = express()
 // middlewares for the server
 app.use(express.json())
 app.use(cors())
+app.use(express.static('client/build'))
 
 mongoose.set('strictQuery', true)
 
@@ -118,6 +119,11 @@ app.delete('/api/todos/deleteTodo/:id', async (req,res) => {
 
     }
 });
+
+
+app.get("*", (req,res) => {
+    res.sendFile(__dirname+"/client/build/index.html")
+})
 
 //mongoose connection string
 // mongoose.connect("mongodb://127.0.0.1:27017/todosGoCodeOctober", {
