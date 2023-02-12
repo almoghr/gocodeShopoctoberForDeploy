@@ -5,3 +5,4 @@ export const dummyTodos = [
 ]
 
 export const todosAllowedUpdates = ['title', 'isCompleted']
+export const userAllowedUpdates = ['firstName, lastName', 'password']

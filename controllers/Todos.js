@@ -1,10 +1,10 @@
 import { getAllTodos, getOneTodo, addTodo, deleteTodo } from "../services/Todos.js";
 import { todosAllowedUpdates } from '../data/data.js'
-
+import { getOneUser } from "../services/User.js";
 export const getAllTodosController = async(req, res) => {
     try{
         const allTodos = await getAllTodos()
-    
+        console.log(allTodos)
         res.status(200).send(allTodos)
 
     } catch(e){
@@ -13,12 +13,17 @@ export const getAllTodosController = async(req, res) => {
     }
 }
 
-const obj = {title: "something@something.com"}
-
 export const addTodoController =  async (req,res) => {
     try{
         const todoTitle = req.body.title
-        const newTodo = await addTodo(todoTitle)
+        const userId = req.body.user
+
+        const existUser = await getOneUser(userId)
+        if(!existUser){
+            res.status(404).send({message:"there is no such user, cant create TODO"})
+        }
+        
+        const newTodo = await addTodo(todoTitle, userId)
         res.status(200).send(newTodo)
     } catch(e){
         console.log(e)

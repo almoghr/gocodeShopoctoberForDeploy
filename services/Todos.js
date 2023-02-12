@@ -1,11 +1,11 @@
 import {TodosModel} from '../models/Todos.js'
 
 export const getAllTodos = () => {
-    return TodosModel.find({})
+    return TodosModel.find({}).populate({ path: 'user', select: '-password -__v' })
 }
 
-export const addTodo = (todoTitle) => {
-    const newTodo = new TodosModel({title:todoTitle})
+export const addTodo = (todoTitle, user) => {
+    const newTodo = new TodosModel({title:todoTitle, user})
     return newTodo.save()
 }
 
